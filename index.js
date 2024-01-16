@@ -1,6 +1,8 @@
 //import ejs 
 const express = require('express');
 
+const bodyParser = require('body-parser');
+
 //config the data base 
 const mongodb = require('./config/mongoose');
 
@@ -11,17 +13,17 @@ const port = 8000;
 const app = express();
 
 
+app.use(express.static('./assets'));
+// Use body-parser middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //set view engine 
 app.set('view engine','ejs');
 //set the dynamic view folder
 app.set('views', './views');
 
 
-app.get('/', function(req,res){
-    console.log('request received!!');
-    return res.render('index',{title: "trying"});
-
-});
+app.use('/',require('./routes/index'));
 
 app.listen(port, function(err){
     if(err){

@@ -1,0 +1,189 @@
+body{
+    background-color: rgb(241, 241, 240);
+}
+.navigation-bar {
+
+	background-color: aliceblue;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding-left: 1%;
+	padding-right: 5%;
+	transition: all ease-in-out 1s; /* when the navbar loads, every property transits for 1s */
+}
+
+/* all the divs inside the navigation bar should be placed side by side*/
+.navigation-bar > div {
+	display: inline-block;
+}
+
+/* website title and general description */
+.title-combo > div {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/* for application name to be close */
+.website-name > h2, h5{
+    margin: 0%;
+}
+
+/* main */
+main {
+	width: 100%;
+	padding: 0% 0%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	transition: all ease-in-out 1s;
+}
+/* there are two aside sections both of them will have this class 
+(I have taken care of the re-usability of the classes and removed redundancy) */
+.aside {
+	display: inline-block;
+	overflow: hidden;
+}
+/* section one of the main part */
+.section-1 {
+	width: 70%;
+	height: 86vh;
+	overflow: scroll;
+	overflow-x: hidden;
+    /* padding-right: 5%; */
+}
+/* overflow should be scrollable but the scroll bar should be hidden*/
+.section-1::-webkit-scrollbar {
+	display: none;
+}
+/* section 2 of the main part */
+.section-2 {
+	width: 28%;
+	height: 86vh;
+	padding-left: 3%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {    
+    padding: 1rem;
+    text-align: left;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.table__header {
+    width: 100%;
+    height: 10%;
+    background-color: #fff4;
+    padding: .8rem 0  1rem 0.8rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table__header .input-group {
+    width: 35%;
+    height: 100%;
+    border-radius: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: .2s;
+}
+
+
+/* search icon in the search box  */
+.table__header .input-group img {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+/* search box beautification 
+.table__header .input-group input {
+    width: 100%;
+    padding: 0 .5rem 0 .3rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+} */
+
+/* search box gets expanded and shadow 
+.table__header .input-group:hover {
+    width: 45%;
+    background-color: #fff8;
+    box-shadow: 0 .1rem .4rem #0002;
+} */
+
+
+.table__body {
+    width: 95%;
+    max-height: calc(89% - 1.6rem);
+    background-color: #fffb;
+
+    margin: .8rem auto;
+    border-radius: .6rem;
+
+    overflow: auto;
+    overflow: overlay;
+}
+
+.table__body::-webkit-scrollbar{
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.table__body::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.table__body:hover::-webkit-scrollbar-thumb{ 
+    visibility: visible;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #0000000b;
+}
+
+tbody tr {
+    --delay: .1s;
+    transition: .5s ease-in-out var(--delay), background-color 0s;
+}
+
+tbody tr.hide {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+tbody tr:hover {
+    background-color: #fff6 !important;
+}
+
+

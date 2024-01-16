@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <nav class="navigation-bar">
+        <div class="title-combo">
+            <div class="website-logo">
+
+            </div>
+            <div class="website-name">
+                <h3>Habit Tracker</h3>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <aside class="aside section-1">
+            <section class="table-header">
+                <h3>List </h3>
+            </section>
+            <section class="table-data">
+                <table>
+                    <tbody>
+                        <% for (let habit of habits) { %>
+                            <tr>
+                                <td> <%= habit.name%> </td>
+                                <td>
+                                    <form action="/delete-habit/<%= habit._id %>" name='habitId' method="post">
+                                        <button type="submit" >Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            
+                        <% }%>
+                    </tbody>
+                </table>
+            </section>
+        </aside>
+        <aside class="aside section-2">
+            <div class="habit-add-heading">
+                <h1>Add habit</h1>
+            </div>
+            <div>
+                <form action="/add-habit" method="post">
+                    <input type="text" name="habitName" placeholder="Habit on your mind" required>
+                    <button type="submit">Add </button>
+                </form>
+            </div>
+        </aside>
+    </main>
+    <script src="/scripts/app.js"></script>
+</body>
+</html>

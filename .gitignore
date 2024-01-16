@@ -1,4 +1,7 @@
 node_modules/
-readMe.txt
+ReadMe.txt
 uploads
 googleauth.txt
+PStatement.txt
+package.json
+package-lock.json
