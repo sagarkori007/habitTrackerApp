@@ -12,7 +12,7 @@ const port = 8000;
 //express js
 const app = express();
 
-
+app.use(express.json());
 app.use(express.static('./assets'));
 // Use body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));

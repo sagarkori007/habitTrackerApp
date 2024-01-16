@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/styles/styles2.css">
+</head>
+<body>
+    <%- include('_header')%>
+    <h1>Habit Trends</h1>
+
+    <% if (habitsWithStatus.length > 0) { %>
+        <div id="habits-container">
+            <% habitsWithStatus.forEach(habitWithStatus => { %>
+                <div class="habit-card">
+                    <h2><%= habitWithStatus.habit.name %></h2>
+                    <div class="calendar">
+                        <% habitWithStatus.habitTracking.dailyStatus.forEach(status => { %>
+                            <div class="day <%= status.status.status.toLowerCase() === 'not done' ? 'not-done' : status.status.status.toLowerCase() %>">
+
+                                <p>
+                                    <span class="date">
+                                        <%= status.trackingDate.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                                    </span>
+                                    <br>
+                                    Status: <span class="statusText"><%= status.status.status %></span>
+                                    <select class="statusDropdown" data-habitid="<%= habitWithStatus.habit._id %>" data-trackingdate="<%= status.trackingDate.toISOString().split('T')[0] %>" onchange="changeStatus(this)">
+                                        <option >Change</option>
+                                        <option value="None">None</option>
+                                        <option value="Not done">Not Done</option>
+                                        <option value="Done">Done</option>
+                                        
+                                    </select>
+                                </p>
+                            </div>                        
+                        <% }); %>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p>No habits found.</p>
+    <% } %>
+
+    <script>
+        async function changeStatus(selectElement) {
+            const habitId = selectElement.getAttribute('data-habitid');
+            const trackingDate = selectElement.getAttribute('data-trackingdate');
+            const newStatus = selectElement.value;
+    
+            try {
+                const response = await fetch('/tracker/updateStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ habitId, trackingDate, newStatus }),
+                });
+    
+                if (response.ok) {
+                    console.log('Habit status updated successfully');
+                    // Optionally, update the UI to reflect the changes
+                    const statusTextElement = selectElement.parentElement.querySelector('.statusText');
+                    if (statusTextElement) {
+                        statusTextElement.innerText = newStatus;
+                    }
+    
+                    // Reload the page to reflect the updated status
+                    location.reload();
+                } else {
+                    console.error('Error updating habit status:', response.statusText);
+                    // Handle error
+                }
+            } catch (error) {
+                console.error('Error updating habit status:', error.message);
+                // Handle error
+            }
+        }
+    </script>
+    
+</body>
+</html>

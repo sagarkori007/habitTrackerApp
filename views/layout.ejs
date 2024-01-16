@@ -7,16 +7,7 @@
     <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
-    <nav class="navigation-bar">
-        <div class="title-combo">
-            <div class="website-logo">
-
-            </div>
-            <div class="website-name">
-                <h3>Habit Tracker</h3>
-            </div>
-        </div>
-    </nav>
+    <%- include('_header'); %>
     <main>
         <aside class="aside section-1">
             <section class="table-header">
@@ -34,7 +25,6 @@
                                     </form>
                                 </td>
                             </tr>
-                            
                         <% }%>
                     </tbody>
                 </table>
@@ -52,6 +42,6 @@
             </div>
         </aside>
     </main>
-    <script src="/scripts/app.js"></script>
+    <!-- <script src="/scripts/app.js"></script> -->
 </body>
 </html>

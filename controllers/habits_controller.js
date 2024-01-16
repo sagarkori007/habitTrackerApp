@@ -55,8 +55,6 @@ const habitController = {
             */
 
             await habitTracking.save();
-
-
             await habit.save();
 
             console.log('Habit created successfully:', habit);
@@ -86,13 +84,74 @@ const habitController = {
             //res.status(204).json({message: 'Habit deleted successfully'});
 
         }catch (error){
-
             console.error('Error deleting habit:', error);
-            
             res.status(500).json({ error: 'Internal Server Error' });
-
         }
-    }
+    },
+
+    habitTrackerHome: async (req, res) => {
+        try {
+            const habits = await Habit.find();
+            const habitsWithStatus = [];
+
+            for (const habit of habits) {
+                const habitTracking = await HabitTracking.findOne({ habit: habit._id })
+                    .populate({
+                        path: 'dailyStatus.status',
+                        model: 'HabitStatus'
+                    })
+                    .sort({ 'dailyStatus.trackingDate': -1 })
+                    .limit(6);
+
+                habitsWithStatus.push({
+                    habit,
+                    habitTracking: habitTracking || { dailyStatus: [] } // Default to empty array if no tracking data
+                });
+
+                // console.log(habit.name,habitTracking);
+            }
+
+            //console.log(habitsWithStatus);
+            return res.render('trackerHome', { habitsWithStatus });
+        } catch (error) {
+            console.error('Error fetching habits and their status:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },
+    updateStatus: async (req, res) => {
+        try {
+            console.log('Updating habit status started');
+            const { habitId, trackingDate, newStatus } = req.body;
+            // console.log(habitId, trackingDate, newStatus, req.params);
+            const habitTrackingToUpdate = await HabitTracking.findOne({ habit: habitId, 'dailyStatus.trackingDate': trackingDate });
+    
+            if (!habitTrackingToUpdate) {
+                return res.status(404).json({ message: 'Habit tracking record not found for the specified date' });
+            }
+    
+            const habitStatus = await HabitStatus.findOne({ status: newStatus });
+            if (!habitStatus) {
+                return res.status(404).json({ message: 'Invalid habit status' });
+            }
+    
+            const existingStatusIndex = habitTrackingToUpdate.dailyStatus.findIndex(status => status.trackingDate.toISOString().split('T')[0] === trackingDate);
+            if (existingStatusIndex !== -1) {
+                habitTrackingToUpdate.dailyStatus[existingStatusIndex].status = habitStatus._id;
+            } else {
+                habitTrackingToUpdate.dailyStatus.push({ status: habitStatus._id, trackingDate });
+            }
+    
+            await habitTrackingToUpdate.save();
+    
+            console.log('Habit status updated successfully', habitTrackingToUpdate);
+            res.status(200).json({ message: 'Habit status updated successfully' });
+    
+        } catch (error) {
+            console.error('Error updating habit status:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },
+    
 
 }
 

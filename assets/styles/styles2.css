@@ -1,0 +1,57 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#habits-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.habit-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    flex: 1;
+    flex-basis: 100%;
+}
+
+.habit-card h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.day {
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.none {
+    background-color: #ecf01e; /* Red for None */
+    color: #fff;
+}
+
+.not-done {
+    background-color: #f44336; /* Red for Not done */
+    color: #fff;
+}
+
+.done {
+    background-color: #82c91e; /* Green for Done */
+    color: #fff;
+}
