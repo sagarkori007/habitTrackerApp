@@ -1,40 +1,59 @@
+<!-- HTML Document Structure -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for character set and viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Title of the page dynamically set by the server -->
     <title><%= title %></title>
+    
     <link rel="stylesheet" href="/styles/styles.css">
 </head>
 <body>
+    <!-- Include header section using EJS partial -->
     <%- include('_header'); %>
+    
+    <!-- Main content section -->
     <main>
+        <!-- First aside element with a list of habits -->
         <aside class="aside section-1">
             <section class="table-header">
+                <!-- Heading for the habit list -->
                 <h3>List </h3>
             </section>
             <section class="table-data">
+                <!-- Table displaying habits -->
                 <table>
                     <tbody>
+                        <!-- Loop through habits to populate the table rows -->
                         <% for (let habit of habits) { %>
                             <tr>
+                                <!-- Display habit name -->
                                 <td> <%= habit.name%> </td>
+                                
+                                <!-- Form for deleting a habit -->
                                 <td>
                                     <form action="/delete-habit/<%= habit._id %>" name='habitId' method="post">
                                         <button type="submit" >Delete</button>
                                     </form>
                                 </td>
                             </tr>
-                        <% }%>
+                        <% } %>
                     </tbody>
                 </table>
             </section>
         </aside>
+        
+        <!-- Second aside element with a form to add a new habit -->
         <aside class="aside section-2">
             <div class="habit-add-heading">
+                <!-- Heading for adding a new habit -->
                 <h1>Add habit</h1>
             </div>
             <div>
+                <!-- Form for adding a new habit -->
                 <form action="/add-habit" method="post">
                     <input type="text" name="habitName" placeholder="Habit on your mind" required>
                     <button type="submit">Add </button>
@@ -42,6 +61,5 @@
             </div>
         </aside>
     </main>
-    <!-- <script src="/scripts/app.js"></script> -->
 </body>
 </html>
